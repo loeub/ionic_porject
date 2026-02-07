@@ -12,7 +12,7 @@ import {
   IonIcon
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { personCircleOutline, settingsOutline, logOutOutline } from 'ionicons/icons';
+import { personCircleOutline, settingsOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-profile',
@@ -41,10 +41,7 @@ import { personCircleOutline, settingsOutline, logOutOutline } from 'ionicons/ic
           <ion-icon slot="start" name="settings-outline"></ion-icon>
           <ion-label>Settings</ion-label>
         </ion-item>
-        <ion-item button lines="none" color="danger">
-          <ion-icon slot="start" name="log-out-outline"></ion-icon>
-          <ion-label>Logout</ion-label>
-        </ion-item>
+
       </ion-list>
     </ion-content>
   `,
@@ -89,6 +86,6 @@ import { personCircleOutline, settingsOutline, logOutOutline } from 'ionicons/ic
 })
 export class ProfilePage {
   constructor() {
-    addIcons({ personCircleOutline, settingsOutline, logOutOutline });
+    addIcons({ personCircleOutline, settingsOutline });
   }
 }

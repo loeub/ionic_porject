@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
     IonContent,
     IonHeader,
@@ -31,7 +31,7 @@ import { NotificationService } from '../services/notification.service';
     standalone: true,
     imports: [
         CommonModule,
-        FormsModule,
+        ReactiveFormsModule,
         IonContent,
         IonHeader,
         IonTitle,
@@ -55,6 +55,22 @@ export class CheckoutPage {
     router = inject(Router);
     alertCtrl = inject(AlertController);
     loadingCtrl = inject(LoadingController);
+    fb = inject(FormBuilder);
+
+    checkoutForm: FormGroup;
+
+    constructor() {
+        this.checkoutForm = this.fb.group({
+            fullName: ['', [Validators.required, Validators.minLength(3)]],
+            address: ['', [Validators.required, Validators.minLength(5)]],
+            city: ['', Validators.required],
+            zipCode: ['', [Validators.required, Validators.pattern('^[0-9]{4,6}$')]],
+            cardType: ['', Validators.required],
+            cardNumber: ['', [Validators.required, Validators.pattern('^[0-9]{16}$')]],
+            expiryDate: ['', [Validators.required, Validators.pattern('^(0[1-9]|1[0-2])\/[0-9]{2}$')]],
+            cvv: ['', [Validators.required, Validators.pattern('^[0-9]{3,4}$')]]
+        });
+    }
 
     getSubtotal() {
         return this.cartService.getTotalPrice();
@@ -65,6 +81,11 @@ export class CheckoutPage {
     }
 
     async placeOrder() {
+        if (this.checkoutForm.invalid) {
+            this.checkoutForm.markAllAsTouched();
+            return;
+        }
+
         const loading = await this.loadingCtrl.create({
             message: 'Processing payment...',
             duration: 2000,

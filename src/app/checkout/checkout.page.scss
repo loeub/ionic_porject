@@ -16,7 +16,7 @@ ion-list-header {
     padding-left: 0;
     margin-bottom: 4px;
     min-height: auto;
-    
+
     ion-label {
         font-weight: 700;
         font-size: 16px;
@@ -31,14 +31,32 @@ ion-item {
     --border-radius: 12px;
     --padding-start: 16px;
     --inner-padding-end: 16px;
-    margin-bottom: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    margin-bottom: 4px;
+    /* Reduced to make room for error msg */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     --min-height: 56px;
 }
 
-ion-input, ion-select {
+// Error message styling
+.error-msg {
+    color: var(--ion-color-danger, #eb445a);
+    font-size: 12px;
+    margin-left: 12px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+ion-input,
+ion-select {
     --padding-top: 8px;
     --padding-bottom: 8px;
+}
+
+/* Specific styling for flex inputs to handle errors better */
+.flex-input-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
 .summary-section {
@@ -47,7 +65,7 @@ ion-input, ion-select {
     border-radius: 16px;
     margin-top: 24px;
     margin-bottom: 24px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
 
     .summary-row {
         display: flex;
@@ -71,15 +89,20 @@ ion-input, ion-select {
 .footer-content {
     background: #fff;
     padding: 16px 20px;
-    box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
 }
 
 ion-button {
     --background: #000;
     --border-radius: 14px;
-    --box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    --box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     height: 54px;
     font-weight: 600;
     font-size: 16px;
     letter-spacing: 0.5px;
+
+    &[disabled] {
+        --background: #ccc;
+        opacity: 0.7;
+    }
 }

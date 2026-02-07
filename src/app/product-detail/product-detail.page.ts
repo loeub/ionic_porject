@@ -20,6 +20,7 @@ import { FavoritesService } from '../services/favorites.service';
 import { CartService } from '../services/cart.service';
 import { addIcons } from 'ionicons';
 import { heart, heartOutline, star, cart } from 'ionicons/icons';
+import { ProductCardComponent } from '../components/product-card/product-card.component';
 
 @Component({
     selector: 'app-product-detail',
@@ -37,7 +38,9 @@ import { heart, heartOutline, star, cart } from 'ionicons/icons';
         IonIcon,
         IonButton,
         IonFooter,
-        IonSpinner
+        IonFooter,
+        IonSpinner,
+        ProductCardComponent
     ],
 })
 export class ProductDetailPage implements OnInit {
@@ -46,8 +49,10 @@ export class ProductDetailPage implements OnInit {
     private favoritesService = inject(FavoritesService);
     private cartService = inject(CartService);
     private toastController = inject(ToastController);
+    private router = inject(Router);
 
     product: Product | null = null;
+    relatedProducts: Product[] = [];
     isLoading = true;
     isProductFavorite = false;
 
@@ -78,12 +83,25 @@ export class ProductDetailPage implements OnInit {
                 this.isLoading = false;
                 // Check favorite status once loaded
                 this.isProductFavorite = this.favoritesService.isFavorite(res);
+                this.loadRelatedProducts(res.category);
             },
             error: (err) => {
                 console.error(err);
                 this.isLoading = false;
             }
         });
+    }
+
+    loadRelatedProducts(category: string) {
+        this.productService.getProductsByCategory(category).subscribe(products => {
+            this.relatedProducts = products
+                .filter(p => p.id !== this.product?.id)
+                .slice(0, 5); // Limit to 5 related items
+        });
+    }
+
+    openProduct(product: Product) {
+        this.router.navigate(['/product-detail', product.id]);
     }
 
     toggleFavorite() {

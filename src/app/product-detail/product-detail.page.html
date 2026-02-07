@@ -34,6 +34,16 @@
             <p>{{ product.description }}</p>
         </div>
     </div>
+
+    <!-- Related Products Section -->
+    <div class="related-section" *ngIf="relatedProducts.length > 0">
+        <h3>You might also like</h3>
+        <div class="scroll-container">
+            <div class="scroll-item" *ngFor="let rel of relatedProducts" (click)="openProduct(rel)">
+                <app-product-card [product]="rel" [isFavorite]="false"></app-product-card>
+            </div>
+        </div>
+    </div>
 </ion-content>
 
 <ion-footer class="ion-no-border" *ngIf="product">

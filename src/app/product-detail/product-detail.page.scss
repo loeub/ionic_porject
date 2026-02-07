@@ -83,6 +83,42 @@ ion-content {
     }
 }
 
+.related-section {
+    margin-top: 32px;
+    margin-bottom: 80px;
+    /* Space for footer */
+
+    h3 {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 16px;
+        color: #1f2937;
+    }
+
+    .scroll-container {
+        display: flex;
+        overflow-x: auto;
+        gap: 16px;
+        padding-bottom: 16px;
+        /* Hide scrollbar a bit or give breath space */
+        scrollbar-width: none;
+        /* Firefox */
+        -ms-overflow-style: none;
+        /* IE 10+ */
+
+        &::-webkit-scrollbar {
+            display: none;
+            /* Chrome/Safari */
+        }
+
+        .scroll-item {
+            flex: 0 0 160px;
+            /* Fixed width for cards */
+            width: 160px;
+        }
+    }
+}
+
 .footer-content {
     background: #fff;
     padding: 16px 24px;

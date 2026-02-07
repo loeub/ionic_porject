@@ -8,45 +8,96 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-    <ion-list lines="none">
-        <ion-list-header>
-            <ion-label>Shipping Address</ion-label>
-        </ion-list-header>
-        <ion-item>
-            <ion-input label="Full Name" labelPlacement="floating" placeholder="John Doe"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-input label="Address" labelPlacement="floating" placeholder="123 Main St"></ion-input>
-        </ion-item>
-        <ion-item>
-            <div style="display: flex; gap: 10px; width: 100%;">
-                <ion-input label="City" labelPlacement="floating" placeholder="New York"></ion-input>
-                <ion-input label="Zip Code" labelPlacement="floating" placeholder="10001" type="number"></ion-input>
+    <form [formGroup]="checkoutForm">
+        <ion-list lines="none">
+            <ion-list-header>
+                <ion-label>Shipping Address</ion-label>
+            </ion-list-header>
+            <ion-item>
+                <ion-input formControlName="fullName" label="Full Name" labelPlacement="floating"
+                    placeholder="John Doe"></ion-input>
+            </ion-item>
+            <div class="error-msg"
+                *ngIf="checkoutForm.get('fullName')?.invalid && checkoutForm.get('fullName')?.touched">
+                Full Name is required (min 3 chars)
             </div>
-        </ion-item>
 
-        <ion-list-header>
-            <ion-label>Payment Method</ion-label>
-        </ion-list-header>
-        <ion-item>
-            <ion-select label="Card Type" labelPlacement="floating" placeholder="Select Card">
-                <ion-select-option value="visa">Visa</ion-select-option>
-                <ion-select-option value="mastercard">MasterCard</ion-select-option>
-                <ion-select-option value="amex">Amex</ion-select-option>
-            </ion-select>
-        </ion-item>
-        <ion-item>
-            <ion-input label="Card Number" labelPlacement="floating" placeholder="0000 0000 0000 0000"
-                type="number"></ion-input>
-        </ion-item>
-        <ion-item>
-            <div style="display: flex; gap: 10px; width: 100%;">
-                <ion-input label="Expiry Date" labelPlacement="floating" placeholder="MM/YY"></ion-input>
-                <ion-input label="CVV" labelPlacement="floating" placeholder="123" type="number"
-                    maxlength="3"></ion-input>
+            <ion-item>
+                <ion-input formControlName="address" label="Address" labelPlacement="floating"
+                    placeholder="123 Main St"></ion-input>
+            </ion-item>
+            <div class="error-msg" *ngIf="checkoutForm.get('address')?.invalid && checkoutForm.get('address')?.touched">
+                Address is required
             </div>
-        </ion-item>
-    </ion-list>
+
+            <ion-item>
+                <div style="display: flex; gap: 10px; width: 100%;">
+                    <div>
+                        <ion-input formControlName="city" label="City" labelPlacement="floating"
+                            placeholder="New York"></ion-input>
+                        <div class="error-msg"
+                            *ngIf="checkoutForm.get('city')?.invalid && checkoutForm.get('city')?.touched">
+                            City is required
+                        </div>
+                    </div>
+                    <div>
+                        <ion-input formControlName="zipCode" label="Zip Code" labelPlacement="floating"
+                            placeholder="10001" type="number"></ion-input>
+                        <div class="error-msg"
+                            *ngIf="checkoutForm.get('zipCode')?.invalid && checkoutForm.get('zipCode')?.touched">
+                            Invalid Zip
+                        </div>
+                    </div>
+                </div>
+            </ion-item>
+
+            <ion-list-header>
+                <ion-label>Payment Method</ion-label>
+            </ion-list-header>
+            <ion-item>
+                <ion-select formControlName="cardType" label="Card Type" labelPlacement="floating"
+                    placeholder="Select Card">
+                    <ion-select-option value="visa">Visa</ion-select-option>
+                    <ion-select-option value="mastercard">MasterCard</ion-select-option>
+                    <ion-select-option value="amex">Amex</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <div class="error-msg"
+                *ngIf="checkoutForm.get('cardType')?.invalid && checkoutForm.get('cardType')?.touched">
+                Select a card type
+            </div>
+
+            <ion-item>
+                <ion-input formControlName="cardNumber" label="Card Number" labelPlacement="floating"
+                    placeholder="0000 0000 0000 0000" type="number" maxlength="16"></ion-input>
+            </ion-item>
+            <div class="error-msg"
+                *ngIf="checkoutForm.get('cardNumber')?.invalid && checkoutForm.get('cardNumber')?.touched">
+                Enter valid 16-digit number
+            </div>
+
+            <ion-item>
+                <div style="display: flex; gap: 10px; width: 100%;">
+                    <div>
+                        <ion-input formControlName="expiryDate" label="Expiry Date" labelPlacement="floating"
+                            placeholder="MM/YY"></ion-input>
+                        <div class="error-msg"
+                            *ngIf="checkoutForm.get('expiryDate')?.invalid && checkoutForm.get('expiryDate')?.touched">
+                            Format MM/YY
+                        </div>
+                    </div>
+                    <div>
+                        <ion-input formControlName="cvv" label="CVV" labelPlacement="floating" placeholder="123"
+                            type="number" maxlength="4"></ion-input>
+                        <div class="error-msg"
+                            *ngIf="checkoutForm.get('cvv')?.invalid && checkoutForm.get('cvv')?.touched">
+                            Invalid CVV
+                        </div>
+                    </div>
+                </div>
+            </ion-item>
+        </ion-list>
+    </form>
 
     <div class="summary-section">
         <div class="summary-row">
@@ -66,7 +117,7 @@
 
 <ion-footer class="ion-no-border">
     <div class="footer-content">
-        <ion-button expand="block" (click)="placeOrder()">
+        <ion-button expand="block" (click)="placeOrder()" [disabled]="checkoutForm.invalid">
             Place Order • {{ getTotal() | currency }}
         </ion-button>
     </div>
