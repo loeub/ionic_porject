@@ -24,12 +24,11 @@ import { NotificationService } from '../services/notification.service';
 
     <ion-content style="--background: #fff">
       <ion-list>
-        <ion-item *ngFor="let notif of notifications">
+        <ion-item *ngFor="let notif of notifications$ | async">
           <ion-label>
             <h2>{{ notif.title }}</h2>
-            <p>{{ notif.message }}</p>
+            <p>{{ notif.message }} ({{notif.date}})</p>
           </ion-label>
-          <ion-note slot="end">{{ notif.date }}</ion-note>
         </ion-item>
       </ion-list>
     </ion-content>
@@ -50,5 +49,5 @@ import { NotificationService } from '../services/notification.service';
 })
 export class NotificationsPage {
   notificationService = inject(NotificationService);
-  notifications = this.notificationService.getNotifications();
+  notifications$ = this.notificationService.notifications$;
 }

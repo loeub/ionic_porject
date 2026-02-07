@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import {
     IonContent,
     IonHeader,
@@ -46,6 +47,7 @@ export class CartPage {
     cartService = inject(CartService);
     alertCtrl = inject(AlertController);
     loadingCtrl = inject(LoadingController);
+    router = inject(Router);
     cartItems: CartItem[] = [];
 
     constructor() {
@@ -59,23 +61,8 @@ export class CartPage {
         this.cartService.removeFromCart(item.id);
     }
 
-    async checkout() {
-        const loading = await this.loadingCtrl.create({
-            message: 'Processing order...',
-            duration: 2000
-        });
-        await loading.present();
-
-        await loading.onDidDismiss();
-
-        this.cartService.clearCart();
-
-        const alert = await this.alertCtrl.create({
-            header: 'Order Placed!',
-            message: 'Thank you for your purchase.',
-            buttons: ['OK']
-        });
-        await alert.present();
+    checkout() {
+        this.router.navigate(['/checkout']);
     }
 
     getTotal(): number {
