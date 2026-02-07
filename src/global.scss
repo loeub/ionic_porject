@@ -1,0 +1,66 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ */
+
+@import "@ionic/angular/css/core.css";
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+/* @import '@ionic/angular/css/palettes/dark.system.css'; */
+
+/* GadgetPro Global Styles */
+:root {
+    --ion-font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Horizontal Scroll Container (common pattern) */
+.horizontal-scroll {
+    display: flex;
+    overflow-x: auto;
+    gap: 16px;
+    padding: 10px 20px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    /* IE and Edge */
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+/* Section Header Shared Style */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    margin-top: 24px;
+    margin-bottom: 16px;
+
+    h3 {
+        font-size: 18px;
+        font-weight: 700;
+        margin: 0;
+        color: var(--ion-color-dark);
+        letter-spacing: -0.5px;
+    }
+
+    span {
+        color: var(--ion-color-primary);
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+}

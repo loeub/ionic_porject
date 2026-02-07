@@ -1,0 +1,56 @@
+<ion-header class="ion-no-border">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/home">-></ion-back-button>
+        </ion-buttons>
+        <ion-title>Detail</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="toggleFavorite()">
+                <ion-icon [name]="isFavorite() ? 'heart' : 'heart-outline'"
+                    [color]="isFavorite() ? 'danger' : ''"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="product; else loadingOrError">
+    <div class="product-image-container">
+        <img [src]="product.thumbnail" [alt]="product.title" />
+    </div>
+
+    <div class="product-info">
+        <div class="title-row">
+            <h1>{{ product.title }}</h1>
+        </div>
+
+        <div class="rating-row">
+            <ion-icon name="star" color="warning"></ion-icon>
+            <span>{{ product.rating }}</span>
+            <span class="reviews">(120 Reviews)</span>
+        </div>
+
+        <div class="description">
+            <h3>Description</h3>
+            <p>{{ product.description }}</p>
+        </div>
+    </div>
+</ion-content>
+
+<ion-footer class="ion-no-border" *ngIf="product">
+    <div class="footer-content">
+        <div class="price-container">
+            <span class="label">Price</span>
+            <span class="price">{{ product.price | currency }}</span>
+        </div>
+        <button class="add-cart-btn" (click)="addToCart()">
+            <ion-icon name="cart"></ion-icon> Add to Cart
+        </button>
+    </div>
+</ion-footer>
+
+<ng-template #loadingOrError>
+    <div class="center-container">
+        <ion-spinner *ngIf="isLoading"></ion-spinner>
+        <p *ngIf="!isLoading">Product not found.</p>
+    </div>
+</ng-template>

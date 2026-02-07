@@ -1,0 +1,24 @@
+<div class="product-card">
+    <div class="card-img">
+        <img [src]="product.thumbnail" [alt]="product.title">
+        <div class="badges" *ngIf="product.discountPercentage > 0">
+            <span class="discount">-{{ product.discountPercentage | number:'1.0-0' }}%</span>
+        </div>
+    </div>
+    <div class="card-info">
+        <div class="title-row">
+            <h4>{{ product.title }}</h4>
+            <div class="rating">
+                <ion-icon name="star"></ion-icon>
+                <span>{{ product.rating }}</span>
+            </div>
+        </div>
+        <p class="brand">{{ product.brand }}</p>
+        <div class="bottom-row">
+            <span class="price">{{ product.price | currency }}</span>
+            <div class="fav-btn" (click)="onToggleFavorite($event)">
+                <ion-icon [name]="isFavorite ? 'heart' : 'heart-outline'" [class.favorited]="isFavorite"></ion-icon>
+            </div>
+        </div>
+    </div>
+</div>

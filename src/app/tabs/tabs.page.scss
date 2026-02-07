@@ -1,0 +1,77 @@
+/* --- Variables --- */
+$primary-blue: #2563eb;
+$bg-light: #f8f9fa;
+$text-dark: #1f2937;
+$text-gray: #9ca3af;
+
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+ion-router-outlet {
+    flex: 1;
+}
+
+.bottom-nav-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: transparent;
+    /* Container is transparent, child bar has color */
+}
+
+/* --- Custom Floating Footer --- */
+.custom-tab-bar {
+    background: white;
+    height: 70px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.08);
+    position: relative;
+    padding-bottom: env(safe-area-inset-bottom);
+    width: 100%;
+
+    .tab-item {
+        color: #cbd5e1;
+        font-size: 1.6rem;
+
+        /* Center icons */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &.active {
+            color: $primary-blue;
+        }
+    }
+
+    .active-link {
+        color: $primary-blue !important;
+    }
+
+    .floating-fab {
+        position: relative;
+        /* Removed top: -25px to align with bar */
+
+        .fab-circle {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.6rem;
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+            /* Removed border: 4px solid #fff */
+        }
+    }
+}

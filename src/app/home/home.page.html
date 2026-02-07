@@ -1,0 +1,98 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="home-toolbar">
+    <ion-buttons slot="start">
+      <ion-avatar class="user-avatar" (click)="goToProfile()">
+        <img src="https://i.pravatar.cc/150?img=12" alt="user" />
+      </ion-avatar>
+    </ion-buttons>
+
+    <div class="title-container" *ngIf="!isSearching">
+      <ion-title class="logo-text">Gadget<span>Pro</span></ion-title>
+    </div>
+
+    <ion-buttons slot="end">
+      <ion-button class="icon-btn search-btn" (click)="toggleSearch()">
+        <ion-icon [name]="isSearching ? 'close-outline' : 'search-outline'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <div class="search-container-wrapper" *ngIf="isSearching">
+    <ion-searchbar placeholder="Search products..." (ionInput)="handleSearch($event)" (ionClear)="clearSearch()"
+      [debounce]="300" animated="true" showCancelButton="never">
+    </ion-searchbar>
+  </div>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="main-content">
+
+  <!-- Search Results -->
+  <div class="search-results-list" *ngIf="isSearching && searchQuery.length > 0">
+    <div class="section-header">
+      <h3>Search Results</h3>
+    </div>
+    <div class="product-grid">
+      <app-product-card *ngFor="let p of searchResults" [product]="p" [isFavorite]="isFavorite(p)"
+        (toggleFavorite)="toggleFavorite($event, p)" (click)="goToProductDetail(p)"></app-product-card>
+    </div>
+    <div class="empty-state" *ngIf="searchResults.length === 0">
+      <p>No products found for "{{ searchQuery }}"</p>
+    </div>
+  </div>
+
+  <!-- Normal Home Content -->
+  <div *ngIf="!isSearching || searchQuery.length === 0">
+
+    <!-- Hero Banner -->
+    <div class="hero-banner">
+      <div class="hero-content">
+        <span class="badge">New Arrival</span>
+        <h2>Summer<br>Collection</h2>
+        <div class="cta-line"></div>
+      </div>
+      <div class="hero-image">
+        <img src="https://pngimg.com/d/macbook_PNG65.png" alt="Hero Device" />
+      </div>
+    </div>
+
+    <!-- Categories -->
+    <div class="category-scroll">
+      <div class="category-item" *ngFor="let cat of categories" [class.active]="cat.active"
+        (click)="selectCategory(cat)">
+        <div class="icon-box">
+          <ion-icon [name]="cat.icon"></ion-icon>
+        </div>
+        <span>{{ cat.name }}</span>
+      </div>
+    </div>
+
+    <!-- Popular Products (Horizontal) -->
+    <div class="section-header">
+      <h3>Popular Products</h3>
+      <span (click)="goToPopular()">View All</span>
+    </div>
+
+    <div class="horizontal-scroll">
+      <!-- Fixed width wrapper for spacing -->
+      <div class="card-wrapper" *ngFor="let p of popularProducts">
+        <app-product-card [product]="p" [isFavorite]="isFavorite(p)" (toggleFavorite)="toggleFavorite($event, p)"
+          (click)="goToProductDetail(p)">
+        </app-product-card>
+      </div>
+    </div>
+
+    <!-- Best Selling (Grid/Vertical) -->
+    <div class="section-header">
+      <h3>Best Selling</h3>
+      <span (click)="goToBestSelling()">View All</span>
+    </div>
+
+    <div class="product-grid">
+      <app-product-card *ngFor="let p of bestSelling" [product]="p" [isFavorite]="isFavorite(p)"
+        (toggleFavorite)="toggleFavorite($event, p)" (click)="goToProductDetail(p)">
+      </app-product-card>
+    </div>
+
+    <div class="spacer"></div>
+  </div>
+</ion-content>

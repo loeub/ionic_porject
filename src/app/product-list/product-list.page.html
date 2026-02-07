@@ -1,0 +1,44 @@
+<ion-header class="ion-no-border">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/home"></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{ pageTitle }}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+    <!-- Optional Searchbar -->
+    <ion-searchbar placeholder="Search products..."></ion-searchbar>
+
+    <ion-grid>
+        <ion-row>
+            <ion-col size="6" size-md="4" size-lg="3" *ngFor="let p of products">
+                <div class="product-card" (click)="goToProductDetail(p)">
+                    <div class="card-img">
+                        <img [src]="p.thumbnail" alt="{{ p.title }}" />
+                        <div class="fav-icon" (click)="toggleFavorite($event, p)">
+                            <ion-icon [name]="isFavorite(p) ? 'heart' : 'heart-outline'"
+                                [color]="isFavorite(p) ? 'danger' : ''"></ion-icon>
+                        </div>
+                    </div>
+                    <div class="card-info">
+                        <h6>{{ p.title }}</h6>
+                        <p class="brand">{{ p.brand }}</p>
+                        <div class="price-row">
+                            <span class="price">{{ p.price | currency }}</span>
+                            <span class="rating">
+                                <ion-icon name="star" color="warning"></ion-icon> {{ p.rating }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </ion-col>
+        </ion-row>
+
+        <div *ngIf="products.length === 0" class="empty-state">
+            <p>No products found.</p>
+        </div>
+    </ion-grid>
+</ion-content>

@@ -1,0 +1,38 @@
+<ion-header class="ion-no-border">
+    <ion-toolbar>
+
+        <ion-title>My Bag</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <div *ngIf="cartItems.length === 0" class="empty-state">
+        <p>Your bag is empty.</p>
+    </div>
+
+    <ion-list *ngIf="cartItems.length > 0">
+        <ion-item *ngFor="let item of cartItems">
+            <ion-thumbnail slot="start">
+                <img [src]="item.thumbnail" />
+            </ion-thumbnail>
+            <ion-label>
+                <h2>{{ item.title }}</h2>
+                <p>Qty: {{ item.quantity }}</p>
+                <p class="price">{{ item.price | currency }}</p>
+            </ion-label>
+            <ion-button slot="end" fill="clear" color="danger" (click)="removeItem(item)">
+                <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-item>
+    </ion-list>
+</ion-content>
+
+<ion-footer class="ion-no-border" *ngIf="cartItems.length > 0">
+    <div class="cart-footer">
+        <div class="total-row">
+            <span>Total</span>
+            <span class="total-price">{{ getTotal() | currency }}</span>
+        </div>
+        <button class="checkout-btn" (click)="checkout()">Checkout</button>
+    </div>
+</ion-footer>
